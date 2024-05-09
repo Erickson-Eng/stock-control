@@ -23,6 +23,7 @@
             "polyfills": [
               "zone.js"
             ],
+            "baseHref": "/stock-control/",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
