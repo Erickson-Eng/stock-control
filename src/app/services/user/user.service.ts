@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { AuthRequest } from 'src/app/models/interfaces/user/AuthRequest';
 import { AuthResponse } from 'src/app/models/interfaces/user/AuthResponse';
@@ -13,7 +14,9 @@ import { environment } from 'src/environments/environment';
 export class UserService {
   private API_URL = environment.API_URL;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService) {}
 
   signupUser(requestData: SignupUserRequest): Observable<SignupUserResponse> {
     return this.http.post<SignupUserResponse>(
@@ -24,5 +27,11 @@ export class UserService {
 
   authUser(authData: AuthRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.API_URL}/auth`, authData);
+  }
+
+
+  isLoggedIn(): boolean {
+    const JWT_TOKEN = this.cookieService.get('USER_TOKEN');
+    return !!JWT_TOKEN ;
   }
 }

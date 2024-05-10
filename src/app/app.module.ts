@@ -14,6 +14,7 @@ import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent],
@@ -29,6 +30,7 @@ import { MessageService } from 'primeng/api';
     InputTextModule,
     ButtonModule,
     ToastModule,
+    ChartModule
   ],
   providers: [CookieService, MessageService],
   bootstrap: [AppComponent],
