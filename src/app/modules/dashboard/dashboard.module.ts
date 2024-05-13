@@ -13,7 +13,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { SharedModule } from 'src/app/shared/shared.module';
-
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     ToolbarModule,
     CardModule,
     ToastModule,
-    SharedModule
+    SharedModule,
+    ChartModule
   ],
   providers: [CookieService, MessageService],
 })
