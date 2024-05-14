@@ -13,7 +13,7 @@ import { UserService } from 'src/app/services/user/user.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnDestroy{
+export class HomeComponent implements OnDestroy {
   private destroy$ = new Subject<void>();
   loginCard = true;
   loginForm = this.formBuilder.group({
@@ -35,34 +35,34 @@ export class HomeComponent implements OnDestroy{
     private router: Router
   ) {}
 
-
   onSubmitLoginForm(): void {
-    if(this.loginForm.value && this.loginForm.valid){
-      this.userService.authUser(this.loginForm.value as AuthRequest)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (resp) => {
-          if(resp){
-            this.cookieService.set('USER_TOKEN', resp?.token);
-            this.loginForm.reset();
-            this.router.navigate(['/dashboard']);
+    if (this.loginForm.value && this.loginForm.valid) {
+      this.userService
+        .authUser(this.loginForm.value as AuthRequest)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (resp) => {
+            if (resp) {
+              this.cookieService.set('USER_TOKEN', resp?.token);
+              this.loginForm.reset();
+              this.router.navigate(['/dashboard']);
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Sucesso',
+                detail: `Seja bem vindo ${resp.name}!`,
+                life: 2000,
+              });
+            }
+          },
+          error: () => {
             this.messageService.add({
-              severity: 'success',
-              summary: 'Sucesso',
-              detail: `Seja bem vindo ${resp.name}!`,
-              life: 2000
-            })
-          }
-        },
-        error: () => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Erro',
-            detail: `Erro ao realizar login`,
-            life: 2000
-          })
-        },
-      })
+              severity: 'error',
+              summary: 'Erro',
+              detail: `Erro ao realizar login`,
+              life: 2000,
+            });
+          },
+        });
     }
   }
 
@@ -80,8 +80,8 @@ export class HomeComponent implements OnDestroy{
                 severity: 'success',
                 summary: 'Sucesso',
                 detail: `Usuário cadastrado com sucesso ${resp.name}!`,
-                life: 2000
-              })
+                life: 2000,
+              });
             }
           },
           error: () => {
@@ -89,13 +89,12 @@ export class HomeComponent implements OnDestroy{
               severity: 'error',
               summary: 'Erro',
               detail: `Erro ao cadastrar usuário`,
-              life: 2000
-            })
+              life: 2000,
+            });
           },
         });
     }
   }
-
 
   ngOnDestroy(): void {
     this.destroy$.next();
