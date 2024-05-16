@@ -1,3 +1,9 @@
 <app-toolbar-navigation></app-toolbar-navigation>
 
-<app-product-table [products]="productsData" (productEvent)="handleProductAction($event)"></app-product-table>
+<app-product-table
+  [products]="productsData"
+  (productEvent)="handleProductAction($event)"
+  (deleteProductEvent)="handleDeleteAction($event)"
+></app-product-table>
+
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>

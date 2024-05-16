@@ -6,7 +6,7 @@ import { ProductResponse } from 'src/app/models/interfaces/products/ProductRespo
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
   private API_URL = environment.API_URL;
@@ -14,19 +14,26 @@ export class ProductService {
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${this.JWT_TOKEN}`
-    })
-  }
+      Authorization: `Bearer ${this.JWT_TOKEN}`,
+    }),
+  };
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
-
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
   getAllProducts(): Observable<Array<ProductResponse>> {
-    return this.http.get<Array<ProductResponse>>(
-      `${this.API_URL}/products`,this.httpOptions
-    ).pipe(
-      map((product) => product.filter((data) => data?.amount > 0))
-    );
+    return this.http
+      .get<Array<ProductResponse>>(`${this.API_URL}/products`, this.httpOptions)
+      .pipe(map((product) => product.filter((data) => data?.amount > 0)));
+  }
 
+  deleteProduct(id: string): Observable<ProductResponse> {
+
+    return this.http.delete<ProductResponse>(`${this.API_URL}/product/delete`,
+    {
+      ...this.httpOptions,
+      params: {
+        product_id: id,
+      }
+    })
   }
 }

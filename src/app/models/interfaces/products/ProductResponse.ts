@@ -5,6 +5,7 @@ export interface ProductResponse {
   amount: number;
   description: string;
   price: string;
+  category_id?: string;
   category: {
     id: string;
     name: string;
